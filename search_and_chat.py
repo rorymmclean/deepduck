@@ -7,7 +7,7 @@ import streamlit as st
 st.set_page_config(page_title="Deep Searching DuckDuckGo", page_icon="🦜", layout="wide")
 st.title("🦜 Deep Searching DuckDuckGo")
 
-openai_api_key = "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"
+openai_api_key = st.secrets["openai_api_key"]
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
