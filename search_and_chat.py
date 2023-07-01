@@ -32,7 +32,6 @@ if prompt := st.chat_input(placeholder="Who won the Women's U.S. Open in 2018?")
         response = search_agent(prompt)
 
     st.session_state.messages.append({"role": "assistant", "content": response['output']})    
-    for msg in st.session_state.messages:
-        st.chat_message(msg["role"]).write(msg["content"])
+    st.chat_message('assistant').write(response['output'])
     with st.expander('Details', expanded=False):
         st.write(response["intermediate_steps"])
