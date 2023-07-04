@@ -4,8 +4,14 @@ from langchain.chat_models import ChatOpenAI
 from langchain.tools import DuckDuckGoSearchRun
 import streamlit as st
 
-st.set_page_config(page_title="Deep Searching DuckDuckGo", page_icon="🦜", layout="wide")
+st.set_page_config(page_title="Deep Searching DuckDuckGo", page_icon="🦜", layout="wide", initial_sidebar_state="collapsed")
 st.title("🦜 Deep Searching DuckDuckGo")
+
+with st.sidebar:
+    model_radio = st.radio(
+        "Select ChatGPT Model",
+        ("gpt-3.5-turbo", "gpt-4")
+    )
 
 openai_api_key = st.secrets["openai_api_key"]
 if "messages" not in st.session_state:
@@ -18,7 +24,7 @@ if prompt := st.chat_input(placeholder="Who won the Women's U.S. Open in 2018?")
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
 
-    llm = ChatOpenAI(model_name="gpt-4", openai_api_key=openai_api_key)
+    llm = ChatOpenAI(model_name=model_radio, openai_api_key=openai_api_key)
     search_agent = initialize_agent(
         tools=[DuckDuckGoSearchRun(name="Search")],
         llm=llm,
